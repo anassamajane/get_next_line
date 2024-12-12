@@ -6,7 +6,7 @@
 /*   By: anaamaja <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:27:39 by anaamaja          #+#    #+#             */
-/*   Updated: 2024/12/10 18:23:18 by anaamaja         ###   ########.fr       */
+/*   Updated: 2024/12/12 10:32:43 by anaamaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,8 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *str, int search_str);
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 #endif

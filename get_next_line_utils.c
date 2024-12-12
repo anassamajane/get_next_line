@@ -6,7 +6,7 @@
 /*   By: anaamaja <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:53:32 by anaamaja          #+#    #+#             */
-/*   Updated: 2024/12/11 19:40:01 by anaamaja         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:05:25 by anaamaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	return (i);
 }
@@ -25,8 +25,8 @@ size_t	ft_strlen(const char *str)
 char	*ft_strdup(const char *s1)
 {
 	char	*s2;
-	int	i;
-	int	len;
+	size_t	i;
+	size_t	len;
 
 	if (!s1)
 		return (NULL);
@@ -42,15 +42,14 @@ char	*ft_strdup(const char *s1)
 	}
 	s2[i] = '\0';
 	return (s2);
-
 }
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*join;
-	int	i;
-	int	total;
-	int	j;
+	size_t	i;
+	size_t	total;
+	size_t	j;
 
 	if (!s1 && !s2)
 		return (NULL);
@@ -104,8 +103,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 char	*ft_strchr(const char *str, int search_str)
 {
-	int	i;
+	size_t	i;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	while (str[i])
 	{
