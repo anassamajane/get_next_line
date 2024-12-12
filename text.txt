@@ -1,3 +1,0 @@
-hello world!
-i am so tired of this...
-get next line function :)
