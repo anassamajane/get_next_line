@@ -6,7 +6,7 @@
 /*   By: anaamaja <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:51 by anaamaja          #+#    #+#             */
-/*   Updated: 2024/12/15 17:25:28 by anaamaja         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:35:40 by anaamaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*read_and_store(int fd, char *remainder)
 	if (!buffer)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read < 0)
+		return (-1);
 	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
