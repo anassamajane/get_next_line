@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 #include <stdio.h>
-/*
+
 int main()
 {
     int fd = open("testing", O_RDONLY);
@@ -10,22 +10,9 @@ int main()
         return (1);
     }
 
-    char *line;
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s", line);
-        free(line);
-    }
+    char	*line = get_next_line(fd);
+    free(line);
 
     close(fd);
     return (0);
-}
-*/
-
-int	main()
-{
-	char	*line;
-
-	line = get_next_line(42);
-	printf("%s", line);
 }

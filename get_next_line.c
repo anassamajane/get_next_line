@@ -6,23 +6,25 @@
 /*   By: anaamaja <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:51 by anaamaja          #+#    #+#             */
-/*   Updated: 2024/12/12 19:25:56 by anaamaja         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:25:28 by anaamaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+#include <stdio.h>
 char	*read_and_store(int fd, char *remainder)
 {
 	char	*buffer;
 	char	*temp;
 	ssize_t	bytes_read;
 
+	if (remainder && ft_strchr(remainder, '\n'))
+		return (remainder);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		if (!remainder)
@@ -35,8 +37,8 @@ char	*read_and_store(int fd, char *remainder)
 		}
 		if (ft_strchr(remainder, '\n'))
 			break ;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
-
 	free(buffer);
 	return (remainder);
 }
@@ -67,13 +69,14 @@ char	*update_remainder(char *remainder)
 		return (NULL);
 
 	newline_pos = ft_strchr(remainder, '\n');
+	new_remainder = NULL;
 	if (newline_pos)
 	{
-		new_remainder = ft_strdup(newline_pos + 1);
+		if (*(newline_pos + 1))
+			new_remainder = ft_strdup(newline_pos + 1);
 		free(remainder);
 		return (new_remainder);
 	}
-
 	free(remainder);
 	return (NULL);
 }
@@ -83,7 +86,7 @@ char	*get_next_line(int fd)
 	static char	*remainder = NULL;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0)
 		return (NULL);
 
 	remainder = read_and_store(fd, remainder);
