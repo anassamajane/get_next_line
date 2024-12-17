@@ -6,23 +6,18 @@
 /*   By: anaamaja <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:33:51 by anaamaja          #+#    #+#             */
-/*   Updated: 2024/12/15 19:40:12 by anaamaja         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:04:50 by anaamaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-char	*read_and_store(int fd, char *remainder)
-{
-	char	*buffer;
-	char	*temp;
-	ssize_t	bytes_read;
 
-	if (remainder && ft_strchr(remainder, '\n'))
-		return (remainder);
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
+char	*read_helper(int fd, char *remainder, char *buffer)
+{
+	ssize_t	bytes_read;
+	char	*temp;
+
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
@@ -39,6 +34,23 @@ char	*read_and_store(int fd, char *remainder)
 			break ;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
+	if (bytes_read == -1)
+	{
+		free(remainder);
+		return (NULL);
+	}
+	return (remainder);
+}
+
+char	*read_and_store(int fd, char *remainder)
+{
+	char *buffer;
+	if (remainder && ft_strchr(remainder, '\n'))
+		return (remainder);
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	remainder = read_helper(fd, remainder, buffer);
 	free(buffer);
 	return (remainder);
 }
@@ -56,7 +68,6 @@ char	*extract_line(char *remainder)
 		line = ft_substr(remainder, 0, (newline_pos - remainder + 1));
 	else
 		line = ft_strdup(remainder);
-
 	return (line);
 }
 
@@ -78,6 +89,7 @@ char	*update_remainder(char *remainder)
 		return (new_remainder);
 	}
 	free(remainder);
+	remainder = NULL;
 	return (NULL);
 }
 
@@ -86,7 +98,7 @@ char	*get_next_line(int fd)
 	static char	*remainder = NULL;
 	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 
 	remainder = read_and_store(fd, remainder);
