@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*read_helper(int fd, char *remainder, char *buffer)
 {
@@ -37,7 +36,7 @@ char	*read_helper(int fd, char *remainder, char *buffer)
 	if (bytes_read == -1)
 	{
 		free(remainder);
-		return (NULL);
+		return ((remainder = NULL), NULL);
 	}
 	return (remainder);
 }
@@ -62,7 +61,6 @@ char	*extract_line(char *remainder)
 
 	if (!remainder)
 		return (NULL);
-
 	newline_pos = ft_strchr(remainder, '\n');
 	if (newline_pos)
 		line = ft_substr(remainder, 0, (newline_pos - remainder + 1));
@@ -78,7 +76,6 @@ char	*update_remainder(char *remainder)
 
 	if (!remainder)
 		return (NULL);
-
 	newline_pos = ft_strchr(remainder, '\n');
 	new_remainder = NULL;
 	if (newline_pos)
@@ -100,13 +97,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-
 	remainder = read_and_store(fd, remainder);
 	if (!remainder)
 		return (NULL);
-
 	line = extract_line(remainder);
 	remainder = update_remainder(remainder);
-
 	return (line);
 }

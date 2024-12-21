@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;
@@ -51,12 +53,12 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t	total;
 	size_t	j;
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
+	// if (!s1 && !s2)
+	// 	return (NULL);
+	// if (!s1)
+	// 	return (ft_strdup(s2));
+	// if (!s2)
+	// 	return (ft_strdup(s1));
 	i = 0;
 	j = 0;
 	total = ft_strlen(s1) + ft_strlen(s2);
@@ -75,23 +77,23 @@ char	*ft_strjoin(const char *s1, const char *s2)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
-	size_t	s_len;
+	//size_t	s_len;
 	char	*str;
 
 	if (!s)
 		return (NULL);
 	i = 0;
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-	{
-		str = malloc(1);
-		if (!str)
-			return (NULL);
-		str[0] = '\0';
-		return (str);
-	}
-	if (len > s_len - start)
-		len = s_len - start;
+	//s_len = ft_strlen(s);
+	// if (start >= s_len)
+	// {
+	// 	str = malloc(1);
+	// 	if (!str)
+	// 		return (NULL);
+	// 	str[0] = '\0';
+	// 	return (str);
+	// }
+	// if (len > s_len - start)
+	// 	len = s_len - start;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
@@ -118,3 +120,4 @@ char	*ft_strchr(const char *str, int search_str)
 		return ((char *)str + i);
 	return (NULL);
 }
+
