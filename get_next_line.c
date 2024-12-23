@@ -92,7 +92,7 @@ char	*update_remainder(char *remainder)
 
 char	*get_next_line(int fd)
 {
-	static char	*remainder = NULL;
+	static char	*remainder;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
