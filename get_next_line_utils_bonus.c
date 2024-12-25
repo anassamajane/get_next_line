@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -32,7 +32,7 @@ char	*ft_strdup(const char *s1)
 	return (s2);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, const char *s2)
 {
 	char	*join;
 	size_t	i;
@@ -51,6 +51,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	while (s2[i])
 		join[j++] = s2[i++];
 	join[total] = '\0';
+	free(s1);
 	return (join);
 }
 

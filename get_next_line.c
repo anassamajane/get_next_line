@@ -15,8 +15,9 @@
 char	*read_helper(int fd, char *remainder, char *buffer)
 {
 	ssize_t	bytes_read;
-	char	*temp;
 
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
@@ -24,29 +25,23 @@ char	*read_helper(int fd, char *remainder, char *buffer)
 		if (!remainder)
 			remainder = ft_strdup(buffer);
 		else
-		{
-			temp = ft_strjoin(remainder, buffer);
-			free(remainder);
-			remainder = temp;
-		}
+			remainder = ft_strjoin(remainder, buffer);
 		if (ft_strchr(remainder, '\n'))
 			break ;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (bytes_read == -1)
-	{
-		free(remainder);
-		return ((remainder = NULL), NULL);
-	}
+		return (free(remainder), (remainder = NULL), NULL);
 	return (remainder);
 }
 
 char	*read_and_store(int fd, char *remainder)
 {
 	char *buffer;
+
 	if (remainder && ft_strchr(remainder, '\n'))
 		return (remainder);
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	remainder = read_helper(fd, remainder, buffer);
@@ -98,8 +93,6 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	remainder = read_and_store(fd, remainder);
-	if (!remainder)
-		return (NULL);
 	line = extract_line(remainder);
 	remainder = update_remainder(remainder);
 	return (line);
