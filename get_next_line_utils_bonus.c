@@ -89,4 +89,3 @@ char	*ft_strchr(char *str, char search_str)
 		return (str + i);
 	return (NULL);
 }
-

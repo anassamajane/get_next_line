@@ -16,4 +16,3 @@ char	*ft_strchr(char *str, char search_str);
 #  define BUFFER_SIZE 1024
 # endif
 #endif
-

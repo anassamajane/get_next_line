@@ -13,7 +13,7 @@ char	*read_helper(int fd, char *remainder, char *buffer)
 		if (!remainder)
 			remainder = ft_strdup(buffer);
 		else
-			remainder= ft_strjoin(remainder, buffer);
+			remainder = ft_strjoin(remainder, buffer);
 		if (ft_strchr(remainder, '\n'))
 			break ;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -25,7 +25,8 @@ char	*read_helper(int fd, char *remainder, char *buffer)
 
 char	*read_and_store(int fd, char *remainder)
 {
-	char *buffer;
+	char	*buffer;
+
 	if (remainder && ft_strchr(remainder, '\n'))
 		return (remainder);
 	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
@@ -80,10 +81,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 1024)
 		return (NULL);
 	remainder[fd] = read_and_store(fd, remainder[fd]);
-	if (!remainder[fd])
-		return (NULL);
 	line = extract_line(remainder[fd]);
 	remainder[fd] = update_remainder(remainder[fd]);
 	return (line);
 }
-

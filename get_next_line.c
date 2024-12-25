@@ -16,8 +16,8 @@ char	*read_helper(int fd, char *remainder, char *buffer)
 {
 	ssize_t	bytes_read;
 
-	if (BUFFER_SIZE <= 0)
-		return (NULL);
+	//if (BUFFER_SIZE <= 0)
+		//return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
@@ -37,11 +37,11 @@ char	*read_helper(int fd, char *remainder, char *buffer)
 
 char	*read_and_store(int fd, char *remainder)
 {
-	char *buffer;
+	char	*buffer;
 
 	if (remainder && ft_strchr(remainder, '\n'))
 		return (remainder);
-	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	remainder = read_helper(fd, remainder, buffer);
@@ -84,6 +84,8 @@ char	*update_remainder(char *remainder)
 	remainder = NULL;
 	return (NULL);
 }
+
+#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
