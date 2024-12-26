@@ -1,2 +1,0 @@
-line1:file2
-line2:file2
